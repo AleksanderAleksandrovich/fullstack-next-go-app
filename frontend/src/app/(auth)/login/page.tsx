@@ -1,7 +1,5 @@
-const Page = () => {
-  return (
-    <div>login</div>
-  )
-}
+import FormAuth from "@/ui/Forms/FormAuth";
 
-export default Page
+export default function Page() {
+  return <FormAuth />;
+}
