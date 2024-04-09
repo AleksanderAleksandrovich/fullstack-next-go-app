@@ -9,7 +9,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 type Inputs = {
   email: string;
   password: string;
-  repeatPassword?: string;
+  repeatPassword: string;
 };
 const FormAuth = () => {
   const pathName = usePathname();
@@ -23,7 +23,6 @@ const FormAuth = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    
     console.log(data);
   };
 
@@ -61,26 +60,29 @@ const FormAuth = () => {
             )}
           />
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography>Введите пароль</Typography>
-          <Controller
-            name="password"
-            control={control}
-            rules={{
-              required: "Введите пароль",
-              minLength: { value: 8, message: "Минимум 8 символов" },
+
+        {(pathName === "/signUp" || pathName === "/login") && (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
             }}
-            render={({ field }) => (
-              <InputPassword {...field} Errors={errors.password?.message} />
-            )}
-          />
-        </Box>
+          >
+            <Typography>Введите пароль</Typography>
+            <Controller
+              name="password"
+              control={control}
+              rules={{
+                required: "Введите пароль",
+                minLength: { value: 8, message: "Минимум 8 символов" },
+              }}
+              render={({ field }) => (
+                <InputPassword {...field} Errors={errors.password?.message} />
+              )}
+            />
+          </Box>
+        )}
 
         {pathName === "/signUp" && (
           <Box
@@ -156,6 +158,22 @@ const FormAuth = () => {
                 type="submit"
               >
                 Войти
+              </Button>
+            </>
+          )}
+
+          {pathName === "/forgotPassword" && (
+            <>
+              <Typography>
+                Есть аккаунт? <Link href={"/login"}>Войти</Link>{" "}
+                <Link href={"/signUp"}>Зарегистрироваться</Link>
+              </Typography>
+              <Button
+                variant="contained"
+                disabled={!watch("email") || !!errors.email?.message}
+                type="submit"
+              >
+                Восстановить
               </Button>
             </>
           )}
